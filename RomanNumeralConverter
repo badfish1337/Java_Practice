@@ -1,0 +1,107 @@
+/*
+Roman Numerals are represented by seven different symbols: I, V, X, L, C, D, & M
+I = 1
+V = 5
+X = 10
+L = 50
+C = 100
+D = 500
+M = 1000
+
+Numerals are added together when in sequential order.
+
+Six instances define when subtraction must be used:
+1. I is placed before V (4)
+2. I is placed before X (9)
+3. X is placed before L (50)
+4. X is placed before C (90)
+5. C is placed before D (400)
+6. C is placed before M (900)
+
+Objective:
+Create a method to convert a Roman Numeral to an integer.
+ */
+public class Main {
+
+    public static void main(String[] args) {
+        // Test Cases
+        System.out.println("III = 3. romanToInt converter says: " + romanToInt("III"));
+        System.out.println("LVIII = 58. romanToInt converter says: " + romanToInt("LVIII"));
+        System.out.println("MCMXCIV = 1994. romanToInt converter says: " + romanToInt("MCMXCIV"));
+        System.out.println("V = 5. romanToInt converter says: " + romanToInt("V"));
+        System.out.println("IV = 4. romanToInt converter says: " + romanToInt("IV"));
+
+    }
+
+    public static int romanToInt(String s) {
+        int total = 0;
+        for(int x = s.length() -1; x >= 0; x--) {
+            // Noting the characters before
+            char current = s.charAt(x);
+            char before = 'A'; // 'A' used for "null"
+            // Creating before character
+            if (x >= 1) {
+                before = s.charAt(x - 1);
+            }
+            switch (current){
+                case 'I': // Adds 1 for I
+                total += 1;
+                break;
+
+                case 'V': // Adds 5 or 4 for V {
+                if (before == 'I') {
+                    total += 4;
+                    x -= 1;
+                } else {
+                    total += 5;
+                }
+                    break;
+
+                case 'X': // Adds 9 or 10 for X
+                    if (before == 'I') {
+                        total += 9;
+                        x -= 1;
+                    } else {
+                        total += 10;
+                    }
+                    break;
+
+                case 'L': // Adds 40 or 50 for L
+                    if (before == 'X'){
+                        total += 40;
+                        x -= 1;
+                    } else {
+                        total += 50;
+                    }
+                    break;
+
+                case 'C': // Adds 90 or 100 for C
+                    if (before == 'X') {
+                        total += 90;
+                        x -= 1;
+                    } else {
+                        total += 100;
+                    }
+                    break;
+                case 'D': // Adds 400 or 500 for D
+                    if (before == 'C') {
+                        total += 400;
+                        x -= 1;
+                    } else {
+                        total += 500;
+                    }
+                    break;
+
+                case 'M': // Adds 900 or 1000 for M
+                    if (before == 'C') {
+                        total += 900;
+                        x -= 1;
+                    } else {
+                        total += 1000;
+                    }
+                    break;
+            }
+        }
+        return total;
+    }
+}
